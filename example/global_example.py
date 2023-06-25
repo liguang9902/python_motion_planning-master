@@ -6,7 +6,7 @@
 '''
 import sys, os
 sys.path.append(os.path.abspath(os.path.join(__file__, "../../")))
-from utils import Grid, Map, SearchFactory
+from utils import Grid, Map, SearchFactory, Plot
 
 
 if __name__ == '__main__':
@@ -23,11 +23,12 @@ if __name__ == '__main__':
     goal = (45, 25)
     env = Grid(51, 31)
 
+    Plot(start, goal, env).plotEnv("test map")
     # creat planner
-    # planner = search_factory("a_star", start=start, goal=goal, env=env)
+    planner = search_factory("a_star", start=start, goal=goal, env=env)
     # planner = search_factory("dijkstra", start=start, goal=goal, env=env)
     # planner = search_factory("gbfs", start=start, goal=goal, env=env)
-    planner = search_factory("jps", start=start, goal=goal, env=env)
+    # planner = search_factory("jps", start=start, goal=goal, env=env)
     # planner = search_factory("d_star", start=start, goal=goal, env=env)
     # planner = search_factory("lpa_star", start=start, goal=goal, env=env)
     # planner = search_factory("d_star_lite", start=start, goal=goal, env=env)

@@ -18,8 +18,19 @@ class Plot:
         self.fig = plt.figure()
         self.ax = self.fig.add_subplot()
 
-    def animation(self, path, name, cost=None, expand=None, history_pose=None):
+    def animation(self, path, name,cost=None, expand=None, history_pose=None):
         name = name + "\ncost: " + str(cost) if cost else name
+        self.plotEnv(name)
+        if expand:
+            self.plotExpand(expand)
+        if history_pose:
+            self.plotHistoryPose(history_pose)
+        self.plotPath(path)
+        plt.show()
+
+    def animation1(self, path, name,cost=None, expand=None, history_pose=None,time_S=None):
+        name = name + "\ncost: " + str(cost) if cost else name
+        name = name + "\ntime: " + str(time_S) 
         self.plotEnv(name)
         if expand:
             self.plotExpand(expand)

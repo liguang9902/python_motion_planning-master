@@ -63,8 +63,9 @@ class AStar(GraphSearcher):
         OPEN = []
         heapq.heappush(OPEN, self.start)
         CLOSED = []
-
+        sum_t = 0.0
         while OPEN:
+            time_start =time.time()
             node = heapq.heappop(OPEN)
 
             # exists in CLOSED set
@@ -93,6 +94,9 @@ class AStar(GraphSearcher):
                 heapq.heappush(OPEN, node_n)
             
             CLOSED.append(node)
+            time_end = time.time()
+            sum_t = (time_end - time_start)+sum_t
+            print('time cost', sum_t, 's')
         return [], []
 
     def getNeighbor(self, node: Node) -> list:

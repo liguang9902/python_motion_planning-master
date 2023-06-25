@@ -122,8 +122,8 @@ class Grid(Env):
             obstacles.add((x - 1, i))
 
         # user-defined obstacles
-        for i in range(3, 15):
-            obstacles.add((i, 10))
+        # for i in range(3, 15):
+        #     obstacles.add((i, 10))
         # for i in range(7, 11):
         #     obstacles.add((3, i))
         # for i in range(4, 16):
