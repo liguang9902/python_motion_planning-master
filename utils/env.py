@@ -6,6 +6,8 @@
 '''
 from math import sqrt
 from abc import ABC, abstractmethod
+import numpy as np
+import random
 
 class Node(object):
     '''
@@ -98,6 +100,7 @@ class Grid(Env):
     def __init__(self, x_range: int, y_range: int) -> None:
         super().__init__(x_range, y_range)
         # allowed motions
+        # 可改进点3：增加算法搜索的临域：
         self.motions = [Node((-1, 0), None, 1, None), Node((-1, 1),  None, sqrt(2), None),
                         Node((0, 1),  None, 1, None), Node((1, 1),   None, sqrt(2), None),
                         Node((1, 0),  None, 1, None), Node((1, -1),  None, sqrt(2), None),
@@ -145,6 +148,13 @@ class Grid(Env):
         # for i in range(15, 18):
         #     obstacles.add((23, i))
         #     obstacles.add((24, i))
+        # for i in range(10, 17):
+        #     obstacles.add((25, i))
+        # for i in range(42, 50):
+        #     obstacles.add((i, 10))
+        # for i in range(32, 45):
+        #     obstacles.add((i, 20))  
+        #常用障碍  
         for i in range(10, 21):
             obstacles.add((i, 15))
         for i in range(15):
@@ -154,6 +164,96 @@ class Grid(Env):
         for i in range(16):
             obstacles.add((40, i))
 
+        # user-defined obstacles 设定用30*30
+        # for i in range(2,4):
+        #     obstacles.add((i,5))
+        #     obstacles.add((i,6))
+        # for i in range(3,6):
+        #     obstacles.add((6,i))
+        #     obstacles.add((7,i))
+        # for i in range(7,9):
+        #     obstacles.add((7,i))
+        #     obstacles.add((8,i))
+        # for i in range(8,14):
+        #     obstacles.add((i,12))
+        #     obstacles.add((i,13))
+        #     obstacles.add((i,14))
+        # for i in range(9,11):
+        #     obstacles.add((10,i))
+        #     obstacles.add((11,i))
+        # for i in range(16,20):
+        #     obstacles.add((16,i))
+        #     obstacles.add((17,i))    
+        #     obstacles.add((18,i))    
+        #     obstacles.add((19,i)) 
+        # for i in range(22,28):
+        #     obstacles.add((i,23))
+        # for i in range(12,21):
+        #     obstacles.add((24,i))
+        #     obstacles.add((25,i)) 
+        # for i in range(1,8):
+        #     obstacles.add((14,i))
+        #     obstacles.add((15,i)) 
+        # for i in range(18,21):
+        #     obstacles.add((i,11))
+        #     obstacles.add((i,12))
+        # for i in range(23,25):
+        #     obstacles.add((i,26))
+        #     obstacles.add((i,27))
+        # for i in range(20,27):
+        #     obstacles.add((i,7))
+        #     obstacles.add((i,8))
+        # for i in range(19,22):
+        #     obstacles.add((i,2))
+        #     obstacles.add((i,3))
+        #     obstacles.add((i,4))
+        # for i in range(1,4):
+        #     obstacles.add((27,i))
+        # for i in range(27,30):
+        #     obstacles.add((i,10))
+        # for i in range(12,18):
+        #     obstacles.add((i,25))
+        #     obstacles.add((i,24))
+        #     obstacles.add((i,23))
+        # for i in range(20,30):
+        #     obstacles.add((4,i))
+        #     obstacles.add((5,i))
+        # for i in range(1,6):
+        #     obstacles.add((i,10))
+        # for i in range(3,8):
+        #     obstacles.add((i,17))
+        #     obstacles.add((i,18))
+        # for i in range(16,22):
+        #     obstacles.add((10,i))
+        #     obstacles.add((11,i))
+        # for i in range(2,4):
+        #     obstacles.add((i,14))
+        #     obstacles.add((i,13))
+        # for i in range(8,14):
+        #     obstacles.add((i,29))
+        #     obstacles.add((i,28))
+        # for i in range(24,30):
+        #     obstacles.add((19,i))
+        #     obstacles.add((20,i))
+
+        #长条形
+        # for i in range(1,17):
+        #     obstacles.add((7,i))
+        # for i in range(14,30):
+        #     obstacles.add((19,i))  
+
+        # for i in range(1,15):
+        #     obstacles.add((i,24)) 
+        # for i in range(19,23):
+        #     obstacles.add((i,20)) 
+        # for i in range(11,30):
+        #     obstacles.add((i,7))
+
+
+        # for i in range(int((x-1)*(y-1)/10)):
+        #     j = random.randint(1,x-1)
+        #     k = random.randint(1,y-1)
+        #     obstacles.add((j,k))
         self.obstacles = obstacles
 
     def update(self, obstacles):

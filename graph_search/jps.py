@@ -11,6 +11,11 @@ sys.path.append(os.path.abspath(os.path.join(__file__, "../../")))
 
 from .a_star import AStar
 from utils import Env, Node
+import time
+import math
+import numpy as np
+from math import factorial
+import matplotlib.pyplot as plt
 
 class JPS(AStar):
     '''
@@ -37,7 +42,7 @@ class JPS(AStar):
     >>> planner = JPS(start, goal, env)
     >>> planner.run()
     '''
-    def __init__(self, start: tuple, goal: tuple, env: Env, heuristic_type: str = "euclidean") -> None:
+    def __init__(self, start: tuple, goal: tuple, env: Env, heuristic_type: str = "test") -> None:
         super().__init__(start, goal, env, heuristic_type)
     
     def __str__(self) -> str:
@@ -59,8 +64,9 @@ class JPS(AStar):
         OPEN = []
         heapq.heappush(OPEN, self.start)
         CLOSED = []
-
+        sum_t = 0.0
         while OPEN:
+            time_start =time.time()
             node = heapq.heappop(OPEN)
 
             # exists in CLOSED set
@@ -70,7 +76,11 @@ class JPS(AStar):
             # goal found
             if node == self.goal:
                 CLOSED.append(node)
-                return self.extractPath(CLOSED), CLOSED
+                cost, path = self.extractPath(CLOSED)
+                
+                # c=np.array(path)
+                # newpath = evaluate_bezier(c, 50)
+                return [cost, path], CLOSED, sum_t
 
             jp_list = []
             for motion in self.motions:
@@ -90,7 +100,10 @@ class JPS(AStar):
                     break
             
             CLOSED.append(node)
-        return [], []
+            time_end = time.time()
+            sum_t = (time_end - time_start)+sum_t
+            print('time cost', sum_t, 's')
+        return [], [], sum_t
 
     def jump(self, node: Node, motion: Node):
         '''
@@ -183,3 +196,14 @@ class JPS(AStar):
         
         return False
 
+def comb(n, k):
+        return factorial(n) // (factorial(k) * factorial(n-k))
+
+def get_bezier_curve(points):
+        n = len(points) - 1
+        return lambda t: sum(comb(n, i)*t**i * (1-t)**(n-i)*points[i] for i in range(n+1))
+
+def evaluate_bezier(points, total):
+    bezier = get_bezier_curve(points)
+    new_points = np.array([bezier(t) for t in np.linspace(0, 1, total)])
+    return new_points[:, 0], new_points[:, 1]

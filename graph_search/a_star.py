@@ -39,7 +39,7 @@ class AStar(GraphSearcher):
     >>> planner = AStar(start, goal, env)
     >>> planner.run()
     '''
-    def __init__(self, start: tuple, goal: tuple, env: Env, heuristic_type: str = "euclidean") -> None:
+    def __init__(self, start: tuple, goal: tuple, env: Env, heuristic_type: str = "test") -> None:
         super().__init__(start, goal, env, heuristic_type)
 
     def __str__(self) -> str:
@@ -75,7 +75,7 @@ class AStar(GraphSearcher):
             # goal found
             if node == self.goal:
                 CLOSED.append(node)
-                return self.extractPath(CLOSED), CLOSED
+                return self.extractPath(CLOSED), CLOSED, sum_t
 
             for node_n in self.getNeighbor(node):                
                 # exists in CLOSED set
@@ -97,7 +97,7 @@ class AStar(GraphSearcher):
             time_end = time.time()
             sum_t = (time_end - time_start)+sum_t
             print('time cost', sum_t, 's')
-        return [], []
+        return [], [], 0
 
     def getNeighbor(self, node: Node) -> list:
         '''
@@ -146,5 +146,7 @@ class AStar(GraphSearcher):
         '''
         Running both plannig and animation.
         '''
-        (cost, path), expand = self.plan()
-        self.plot.animation(path, str(self), cost, expand)
+        # (cost, path), expand = self.plan()
+        # self.plot.animation(path, str(self), cost, expand)
+        (cost, path), expand, sum_t= self.plan()
+        self.plot.animation1(path, str(self), cost, expand,None,sum_t)

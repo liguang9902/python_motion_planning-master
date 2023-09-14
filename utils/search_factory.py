@@ -38,5 +38,7 @@ class SearchFactory(object):
             return RRTStar(**config)
         elif planner_name == "informed_rrt":
             return InformedRRT(**config)  
+        elif planner_name == "JPS_2way":
+            return JPS_2way(**config)
         else:
             raise ValueError("The `planner_name` must be set correctly.")

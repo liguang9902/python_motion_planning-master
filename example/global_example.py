@@ -18,20 +18,22 @@ if __name__ == '__main__':
     '''
     graph search
     '''
-    # build environment
-    start = (5, 5)
-    goal = (45, 25)
-    env = Grid(51, 31)
+    # build environment0
+    start = (2, 2)
+    goal = (28, 28)
+    env = Grid(31, 31)
 
-    Plot(start, goal, env).plotEnv("test map")
+    # Plot(start, goal, env).plotEnv("test map")
     # creat planner
-    planner = search_factory("a_star", start=start, goal=goal, env=env)
+    # planner = search_factory("a_star", start=start, goal=goal, env=env)
     # planner = search_factory("dijkstra", start=start, goal=goal, env=env)
     # planner = search_factory("gbfs", start=start, goal=goal, env=env)
-    # planner = search_factory("jps", start=start, goal=goal, env=env)
+    planner = search_factory("jps", start=start, goal=goal, env=env)
     # planner = search_factory("d_star", start=start, goal=goal, env=env)
-    # planner = search_factory("lpa_star", start=start, goal=goal, env=env)
+    # planner = search_factory("lpa_star", start=start, goal=goal, env=env).
     # planner = search_factory("d_star_lite", start=start, goal=goal, env=env)
+    # planner = search_factory("JPS_2way", start=start, goal=goal, env=env)
+
     # animation
     planner.run()
 

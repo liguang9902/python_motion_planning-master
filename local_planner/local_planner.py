@@ -44,6 +44,7 @@ class LocalPlanner(Planner):
         self.g_planner_ = None
         # search factory
         self.search_factory_ = SearchFactory()
+        self.g_planner_ = self.search_factory_("jps",start=start, goal=goal, env=env)
     
     def dist(self, start: tuple, end: tuple) -> float:
         return math.hypot(end[0] - start[0], end[1] - start[1])
@@ -57,8 +58,9 @@ class LocalPlanner(Planner):
     
     @g_planner.setter
     def g_planner(self, **config):
+        print(hasattr(config, "planner_name"))
         if hasattr(config, "planner_name"):
-            self.g_planner_ = self.search_factory_(**config)
+            self.g_planner_ = self.search_factory_("jps",**config)
         else:
             raise RuntimeError("Please set planner name!")
     
@@ -70,5 +72,5 @@ class LocalPlanner(Planner):
         if self.g_planner_ is None:
             raise AttributeError("Global path searcher is None, please set it first!")
         
-        (cost, path), _ = self.g_planner_.plan()
+        (cost, path), expand, sum_t = self.g_planner_.plan()
         return path

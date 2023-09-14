@@ -9,6 +9,7 @@ sys.path.append(os.path.abspath(os.path.join(__file__, "../../")))
 
 from .graph_search import GraphSearcher
 from utils import Env, Node
+import time
 
 class DNode(Node):
     '''
@@ -84,10 +85,15 @@ class DStar(GraphSearcher):
         '''
         D* static motion planning function.
         '''
+        sum_t = 0.0
         while True:
+            time_start =time.time()
             self.processState()
             if self.start.t == 'CLOSED':
                 break
+            time_end = time.time()
+            sum_t = (time_end - time_start)+sum_t
+            print('time cost', sum_t, 's')
         return self.extractPath(self.map), None
 
     def run(self):

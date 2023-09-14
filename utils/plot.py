@@ -6,6 +6,8 @@ import numpy as np
 import matplotlib
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
+from math import factorial
+from decimal import *
 
 from .env import Env, Grid, Map, Node
 
@@ -30,13 +32,13 @@ class Plot:
 
     def animation1(self, path, name,cost=None, expand=None, history_pose=None,time_S=None):
         name = name + "\ncost: " + str(cost) if cost else name
-        name = name + "\ntime: " + str(time_S) 
+        name = name + "\ntime: " + str(time_S) + "s"
         self.plotEnv(name)
         if expand:
             self.plotExpand(expand)
         if history_pose:
             self.plotHistoryPose(history_pose)
-        self.plotPath(path)
+        self.plotPathBez(path)
         plt.show()
 
     def plotEnv(self, name):
@@ -120,6 +122,39 @@ class Plot:
         plt.plot(self.start.current[0], self.start.current[1], marker="s", color="#ff0000")
         plt.plot(self.goal.current[0], self.goal.current[1], marker="s", color="#1155cc")
 
+    def plotPathBez(self, path) -> None:
+        path_x = [path[i][0] for i in range(len(path))]
+        path_y = [path[i][1] for i in range(len(path))]
+        points = np.array(path)
+        n = len(points) 
+        print(n)
+        # points1 = points[0:int(n/4) ]
+        # points2 = points[int(n/4) - 1: int(n/2) ]
+        # points3 = points[int(n/2) - 1: int(n/4 * 3) ]
+        # points4 = points[int(n/4 * 3) - 1: int(n) ]
+        # points1 = np.array([path[0],path[2],path[3],path[6],path[7],path[8],path[10],path[12]])
+        # b_x, b_y = evaluate_bezier(points,100)
+        # b_x1, b_y1 = evaluate_bezier(points1,100)
+        # b_x2, b_y2 = evaluate_bezier(points2,100)
+        # b_x3, b_y3 = evaluate_bezier(points3,100)
+        # b_x4, b_y4 = evaluate_bezier(points4,100)
+        plt.plot(path_x, path_y, linewidth='2', color='#13ae00')
+        # plt.plot(b_x, b_y, linewidth='2', color='#ffff00')
+        # plt.plot(b_x1, b_y1, linewidth='2', color='#ffff00')
+        # plt.plot(b_x2, b_y2, linewidth='2', color='#ffff00')
+        # plt.plot(b_x3, b_y3, linewidth='2', color='#ffff00')
+        # plt.plot(b_x4, b_y4, linewidth='2', color='#ffff00')
+        
+        newpoint = np.array([path[0]])
+        for i in range(0,int(len(points)),2):
+        # while  i in int(len(points))+1:   
+            points1 = points[i:i + 3]
+           
+            b_x1, b_y1 = evaluate_bezier(points1,100)      
+            plt.plot(b_x1, b_y1, linewidth='2', color='#ffff00')
+        plt.plot(self.start.current[0], self.start.current[1], marker="s", color="#ff0000")
+        plt.plot(self.goal.current[0], self.goal.current[1], marker="s", color="#1155cc")
+
     def plotAgent(self, pose: tuple, radius: float=1) -> None:
         x, y, theta = pose
         ref_vec = np.array([[radius / 2], [0]])
@@ -192,3 +227,15 @@ class Plot:
               'blueviolet',
               ]
         return cl
+    
+def comb(n, k):
+        return factorial(n) // (factorial(k) * factorial(n-k))
+
+def get_bezier_curve(points):
+        n = len(points) - 1
+        return lambda t: sum(comb(n, i)*t**i * (1-t)**(n-i)*points[i] for i in range(n+1))
+
+def evaluate_bezier(points, total):
+    bezier = get_bezier_curve(points)
+    new_points = np.array([bezier(t) for t in np.linspace(0, 1, total)])
+    return new_points[:, 0], new_points[:, 1]
