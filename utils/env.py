@@ -155,14 +155,14 @@ class Grid(Env):
         # for i in range(32, 45):
         #     obstacles.add((i, 20))  
         #常用障碍  
-        for i in range(10, 21):
-            obstacles.add((i, 15))
-        for i in range(15):
-            obstacles.add((20, i))
-        for i in range(15, 30):
-            obstacles.add((30, i))
-        for i in range(16):
-            obstacles.add((40, i))
+        # for i in range(10, 21):
+        #     obstacles.add((i, 15))
+        # for i in range(15):
+        #     obstacles.add((20, i))
+        # for i in range(15, 30):
+        #     obstacles.add((30, i))
+        # for i in range(16):
+        #     obstacles.add((40, i))
 
         # user-defined obstacles 设定用30*30
         # for i in range(2,4):

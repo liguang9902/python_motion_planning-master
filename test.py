@@ -23,8 +23,18 @@ if __name__ == '__main__':
     (cost, path), expand, sum_t = planner.plan()
     points = np.array(path)
     new_array = [list(t) + [0] for t in points]
+    global DWApath
+    global DWAcost
+    DWAcost = 0 
+    DWApath = new_array[0]
     for i in range(0,int(len(new_array)),1):
         points1 = new_array[i:i + 2]
+        print(points1[0])
         DWAPlan = DWA(points1[0],points1[1],env)
-        DWAPlan.run()
+        history_traj, history_pose = DWAPlan.plan()
+
+        path1 = np.array(history_pose)[:, 0:2]
+        cost1 = np.sum(np.sqrt(np.sum(np.diff(path1, axis=0)**2, axis=1, keepdims=True)))
+        DWApath += path1
+        DWAcost += cost1
     # planner.run()

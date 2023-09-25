@@ -53,7 +53,7 @@ class DWA(LocalPlanner):
                         }
         # threshold
         self.max_iter = 2000
-        self.max_dist = 1.0
+        self.max_dist = 1.2
 
     def __str__(self) -> str:
         return "Dynamic Window Approach(DWA)"

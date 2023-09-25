@@ -28,11 +28,11 @@ if __name__ == '__main__':
     # planner = search_factory("a_star", start=start, goal=goal, env=env)
     # planner = search_factory("dijkstra", start=start, goal=goal, env=env)
     # planner = search_factory("gbfs", start=start, goal=goal, env=env)
-    planner = search_factory("jps", start=start, goal=goal, env=env)
+    # planner = search_factory("jps", start=start, goal=goal, env=env)
     # planner = search_factory("d_star", start=start, goal=goal, env=env)
     # planner = search_factory("lpa_star", start=start, goal=goal, env=env).
     # planner = search_factory("d_star_lite", start=start, goal=goal, env=env)
-    # planner = search_factory("JPS_2way", start=start, goal=goal, env=env)
+    planner = search_factory("JPS_2way", start=start, goal=goal, env=env)
 
     # animation
     planner.run()

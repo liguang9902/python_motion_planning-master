@@ -6,7 +6,7 @@
 '''
 from utils import Grid, Map, SearchFactory
 from local_planner import DWA
-
+import numpy as np
 if __name__ == '__main__':
     # build environment
     start = (2, 2, 0)
